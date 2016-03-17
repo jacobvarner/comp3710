@@ -1,0 +1,17 @@
+@startuml
+User -> WordScrambler: Enter word
+User -> WordScrambler: Press SCRAMBLE button
+WordScrambler -> WordScrambler: Scramble words
+WordScrambler -> HistoryDisplay: Add HistoryEntry
+User <-- WordScrambler: Display first 5 words
+User -> WordScrambler: Change number of words to display
+User <-- WordScrambler: Display new number of words
+User -> WordScrambler: Press NEXT button
+User <-- WordScrambler: Display next words
+User -> WordScrambler: Press PREV button
+User <-- WordScrambler: Display previous words
+User -> HistoryDisplay: Press HISTORY button
+HistoryDisplay -> HistoryDisplay: Sort history into two columns
+User <-- HistoryDisplay: Display history to user in two columns
+
+@enduml

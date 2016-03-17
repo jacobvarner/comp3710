@@ -1,0 +1,29 @@
+@startuml
+
+object History
+object HistoryEntry
+object Word
+object WordPermutations
+object ScrambledWords
+object Spinner
+object SpinnerValue
+object DisplayedWords
+
+History : int: size
+ScrambledWords : int: size
+WordPermutations : int: size
+Spinner : SpinnerValue: selected
+DisplayedWords : String: words
+DisplayedWords : int: size
+
+History <|-- HistoryEntry
+HistoryEntry <|-- Word
+HistoryEntry <|-- WordPermutations
+Spinner <|-- SpinnerValue
+ScrambledWords <|-- DisplayedWords
+DisplayedWords <|-- WordPermutations
+DisplayedWords <|-- SpinnerValue
+
+
+
+@enduml

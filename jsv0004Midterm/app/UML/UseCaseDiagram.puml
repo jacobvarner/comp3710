@@ -1,0 +1,19 @@
+@startuml
+
+:User:
+:Word Scrambler:
+:History Display:
+
+:User: -> (Enter word)
+(Enter word) -> (Scramble word)
+:User: --> (View history)
+:User: ---> (Select spinner)
+(Select spinner) --> (Set number of unique permutations)
+:Word Scrambler: --> (Scramble word)
+:Word Scrambler: --> (Display selected number of permutations)
+(Display selected number of permutations) .. (Set number of unique permutations) :require
+:History Display: -> (Show words in history)
+(Show words in history) --> (Split into two even columns)
+(Show words in history) .. (View history)
+
+@enduml

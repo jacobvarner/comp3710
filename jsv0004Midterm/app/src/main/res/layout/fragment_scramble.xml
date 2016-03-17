@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrambleFragment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="edu.auburn.eng.csse.comp3710.jsv0004.midterm.jsv004scramble.Scramble">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/spinnerLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Results per page"
+            android:id="@+id/selectText"
+            android:textSize="16dp"
+            android:gravity="left|center_vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:gravity="center_vertical|right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_above="@+id/buttonsLayout"
+        android:layout_below="@+id/spinnerLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/scrambledWords"
+            android:textAlignment="gravity"
+            android:gravity="center_horizontal"
+            android:scrollIndicators="right"
+            android:text="Test" />
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/buttonsLayout">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PREV"
+            android:id="@+id/buttonPrevious"
+            android:foregroundGravity="left"
+            android:layout_alignParentLeft="true"
+            android:visibility="visible" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NEXT"
+            android:id="@+id/buttonNext"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
