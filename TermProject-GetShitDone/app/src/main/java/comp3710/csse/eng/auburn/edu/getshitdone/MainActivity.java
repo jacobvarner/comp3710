@@ -1,6 +1,7 @@
 package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,13 +17,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         EditText taskTitle = (EditText) findViewById(R.id.editTextTaskTitle);
         taskTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
-                    Toast.makeText(getApplicationContext(), "gained focus", Toast.LENGTH_SHORT).show();
+                if(hasFocus) {
                     LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
                     hidden.setVisibility(View.VISIBLE);
                 }else {
@@ -49,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.addTaskCategory) {
+            DialogFragment newFragment = new AddCategoryFragment();
+            newFragment.show(getSupportFragmentManager(), "Add Category");
         }
 
         return super.onOptionsItemSelected(item);
