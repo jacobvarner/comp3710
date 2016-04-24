@@ -1,5 +1,6 @@
 package comp3710.csse.eng.auburn.edu.getshitdone;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -37,7 +38,10 @@ public final class DatabaseManager {
     }
 
     public static void addCategory(String title) {
-
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
+        ContentValues values = new ContentValues();
+        values.put("title", title);
+        db.insert("categories", "null", values);
     }
 
     public static void addTask(String name, int catId, String description, String dueDate, String dueTime) {
