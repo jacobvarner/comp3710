@@ -21,7 +21,7 @@ public final class DatabaseManager {
             db.execSQL("CREATE TABLE categories (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT);");
             db.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT , taskName TEXT," +
                     " categoryId INTEGER NOT NULL CONSTRAINT categoryId REFERENCES categories(id) " +
-                    "ON DELETE CASCADE, createdAt DATETIME, completed BOOLEAN, deleted BOOLEAN, " +
+                    "ON DELETE CASCADE, createdAt DATETIME, completed BOOLEAN, " +
                     "description TEXT, dueDate DATE, dueTime TIME);");
         }
 
@@ -34,5 +34,30 @@ public final class DatabaseManager {
         public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             onUpgrade(db, oldVersion, newVersion);
         }
+    }
+
+    public static void addCategory(String title) {
+
+    }
+
+    public static void addTask(String name, int catId, String description, String dueDate, String dueTime) {
+
+    }
+
+    // Flags: 0 = all, 1 = incomplete
+    public static String[] getTasks(String category, int flag) {
+        return null;
+    }
+
+    public static void markComplete(int taskId) {
+
+    }
+
+    public static void deleteTask(int taskId) {
+
+    }
+
+    public static void removeCategory(int categoryId) {
+
     }
 }
