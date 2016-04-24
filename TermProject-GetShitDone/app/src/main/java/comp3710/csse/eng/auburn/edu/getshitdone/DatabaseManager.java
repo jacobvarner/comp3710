@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public final class DatabaseManager {
 
     public DatabaseManager() {}
@@ -22,8 +24,7 @@ public final class DatabaseManager {
             db.execSQL("CREATE TABLE categories (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT);");
             db.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT , taskName TEXT," +
                     " categoryId INTEGER NOT NULL CONSTRAINT categoryId REFERENCES categories(id) " +
-                    "ON DELETE CASCADE, createdAt DATETIME, completed BOOLEAN, " +
-                    "description TEXT, dueDate DATE, dueTime TIME);");
+                    "ON DELETE CASCADE, completed BOOLEAN, description TEXT, dueDate DATE, dueTime TIME);");
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -45,11 +46,21 @@ public final class DatabaseManager {
     }
 
     public static void addTask(String name, int catId, String description, String dueDate, String dueTime) {
-
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
+        ContentValues values = new ContentValues();
+        values.put("taskName", name);
+        values.put("categoryId", catId);
+        values.put("completed", false);
+        values.put("deleted", false);
+        values.put("description", description);
+        values.put("dueDate", dueDate);
+        values.put("dueTime", dueTime);
+        db.insert("tasks", "null", values);
     }
 
     // Flags: 0 = all, 1 = incomplete
-    public static String[] getTasks(String category, int flag) {
+    public static ArrayList<String[]> getTasks(String category, int flag) {
+
         return null;
     }
 
