@@ -2,6 +2,7 @@ package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -23,8 +24,7 @@ public final class DatabaseManager {
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE categories (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT);");
             db.execSQL("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT , taskName TEXT," +
-                    " categoryId INTEGER NOT NULL CONSTRAINT categoryId REFERENCES categories(id) " +
-                    "ON DELETE CASCADE, completed BOOLEAN, description TEXT, dueDate DATE, dueTime TIME);");
+                    " category TEXT, completed BOOLEAN, description TEXT, dueDate DATE, dueTime TIME);");
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -45,11 +45,11 @@ public final class DatabaseManager {
         db.insert("categories", "null", values);
     }
 
-    public static void addTask(String name, int catId, String description, String dueDate, String dueTime) {
+    public static void addTask(String name, String category, String description, String dueDate, String dueTime) {
         SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
         ContentValues values = new ContentValues();
         values.put("taskName", name);
-        values.put("categoryId", catId);
+        values.put("category", category);
         values.put("completed", false);
         values.put("deleted", false);
         values.put("description", description);
@@ -60,6 +60,23 @@ public final class DatabaseManager {
 
     // Flags: 0 = all, 1 = incomplete
     public static ArrayList<String[]> getTasks(String category, int flag) {
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
+        String completed;
+        String[] projection = {"id", "taskName", "completed", "description", "dueDate", "dueTime"};
+        String selection = "category = ? AND flag = ?";
+        if (flag == 1) {
+            completed = "0";
+        } else {
+            completed = "";
+        }
+        String[] selectionArgs = {category, completed};
+
+        Cursor c = db.query("tasks", projection, selection, selectionArgs, null, null, "ASC");
+
+        return null;
+    }
+
+    public static ArrayList<String> getCategories() {
 
         return null;
     }
