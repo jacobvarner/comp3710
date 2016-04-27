@@ -81,6 +81,7 @@ public final class DatabaseManager {
             row[3] = c.getString(3); // completed
             row[4] = c.getString(4); // description
             output.add(row);
+            c.moveToNext();
         }
 
         return output;
@@ -89,7 +90,16 @@ public final class DatabaseManager {
     public static ArrayList<String> getCategories() {
         ArrayList<String> output = new ArrayList<>();
 
-        return output;
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
+        String[] projection = {"title"};
+        Cursor c = db.query("categories", projection, null, null, null, null, null, "ASC");
+        c.moveToFirst();
+        while(!c.isAfterLast()) {
+            output.add(c.getString(0));
+            c.moveToNext();
+        }
+
+         return output;
     }
 
     public static void markComplete(int taskId) {
