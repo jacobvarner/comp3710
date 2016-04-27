@@ -2,6 +2,7 @@ package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.content.ContentValues;
 import android.content.Context;
+import java.lang.String;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -87,30 +88,49 @@ public final class DatabaseManager {
         return output;
     }
 
-    public static ArrayList<String> getCategories() {
-        ArrayList<String> output = new ArrayList<>();
+    public static ArrayList<String[]> getCategories() {
+        ArrayList<String[]> output = new ArrayList<>();
 
         SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
-        String[] projection = {"title"};
+        String[] projection = {"id", "title"};
         Cursor c = db.query("categories", projection, null, null, null, null, null, "ASC");
         c.moveToFirst();
         while(!c.isAfterLast()) {
-            output.add(c.getString(0));
+            String[] row = new String[c.getColumnCount()];
+            row[0] = c.getString(0);
+            row[1] = c.getString(1);
+            output.add(row);
             c.moveToNext();
         }
 
-         return output;
+        return output;
     }
 
     public static void markComplete(int taskId) {
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
 
+        db.execSQL("UPDATE tasks SET completed = \"true\" WHERE id = " + taskId);
+    }
+
+    public static void markIncomplete(int taskId) {
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
+
+        db.execSQL("UPDATE tasks SET completed = \"false\" WHERE id = " + taskId);
     }
 
     public static void deleteTask(int taskId) {
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
 
+        String[] idArg = {String.valueOf(taskId)};
+
+        db.delete("tasks", "id = ?", idArg);
     }
 
     public static void removeCategory(int categoryId) {
+        SQLiteDatabase db = SQLiteDatabase.openDatabase("GetShitDone.db", null, SQLiteDatabase.OPEN_READWRITE);
 
+        String[] idArg = {String.valueOf(categoryId)};
+
+        db.delete("categories", "id = ?", idArg);
     }
 }
