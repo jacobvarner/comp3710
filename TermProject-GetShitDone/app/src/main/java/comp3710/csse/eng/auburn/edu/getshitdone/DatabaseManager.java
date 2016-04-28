@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import java.lang.String;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.util.ArrayList;
 
@@ -63,17 +64,15 @@ public final class DatabaseManager {
         return output;
     }
 
-    public static ArrayList<String[]> getCategories() {
-        ArrayList<String[]> output = new ArrayList<>();
+    public static ArrayList<String> getCategories() {
+        ArrayList<String> output = new ArrayList<>();
 
         SQLiteDatabase db = SQLiteDatabase.openDatabase(DATABASE_PATH + DATABASE_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        String[] projection = {"id", "title"};
-        Cursor c = db.query("categories", projection, null, null, null, null, null, "ASC");
+        String projection[] = { "title" };
+        Cursor c = db.query("categories", projection, null, null, null, null, "title ASC");
         c.moveToFirst();
         while(!c.isAfterLast()) {
-            String[] row = new String[c.getColumnCount()];
-            row[0] = c.getString(0);
-            row[1] = c.getString(1);
+            String row = c.getString(0);
             output.add(row);
             c.moveToNext();
         }

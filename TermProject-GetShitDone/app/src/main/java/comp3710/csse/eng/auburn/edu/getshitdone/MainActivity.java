@@ -1,7 +1,6 @@
 package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -9,12 +8,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +61,16 @@ public class MainActivity extends AppCompatActivity {
                 if(hasFocus) {
                     LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
                     hidden.setVisibility(View.VISIBLE);
+                    ArrayList<String> categories = DatabaseManager.getCategories();
+
+                    Spinner spinner = (Spinner) findViewById(R.id.spinnerTaskCategories);
+                    // Create an ArrayAdapter using the string array and a default spinner layout
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categories);
+
+                    // Specify the layout to use when the list of choices appears
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    // Apply the adapter to the spinner
+                    spinner.setAdapter(adapter);
                 }else {
                     Toast.makeText(getApplicationContext(), "lost the focus", Toast.LENGTH_SHORT).show();
                 }
