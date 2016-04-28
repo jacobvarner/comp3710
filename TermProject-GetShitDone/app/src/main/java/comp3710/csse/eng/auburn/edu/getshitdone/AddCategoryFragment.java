@@ -2,6 +2,7 @@ package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.print.PrintAttributes;
 import android.support.v4.app.DialogFragment;
@@ -25,8 +26,9 @@ public class AddCategoryFragment extends DialogFragment {
                 .setMessage("Task Category Title")
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        DatabaseManager dbManager = new DatabaseManager();
                         String userInput = input.getText().toString();
-                        DatabaseManager.addCategory(userInput);
+                        dbManager.addCategory(userInput);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
