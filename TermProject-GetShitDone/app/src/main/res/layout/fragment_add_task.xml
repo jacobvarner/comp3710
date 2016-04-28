@@ -48,23 +48,6 @@
                 android:id="@+id/spinnerTaskCategories"
                 android:layout_weight="1" />
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date"
-                android:onClick="showDatePickerDialog"
-                android:id="@+id/buttonDatePicker"
-                android:layout_weight="0" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Time"
-                android:onClick="showTimePickerDialog"
-                android:id="@+id/buttonTimePicker"
-                android:layout_weight="0" />
         </LinearLayout>
 
         <LinearLayout
