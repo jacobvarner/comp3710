@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter.add("All");
+        adapter.insert("All", 0);
+        adapter.remove("Default");
         // Apply the adapter to the spinner
         spinnerCategories.setAdapter(adapter);
     }
