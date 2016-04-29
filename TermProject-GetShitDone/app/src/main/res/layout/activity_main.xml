@@ -9,7 +9,7 @@
     <Spinner
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerCategorySelect"
         android:layout_gravity="center_horizontal"
         android:focusableInTouchMode="true"
         android:layout_margin="10dp" />

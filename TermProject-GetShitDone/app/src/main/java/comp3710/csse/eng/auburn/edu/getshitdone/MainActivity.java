@@ -76,6 +76,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        ArrayList<String> categoriesView = DatabaseManager.getCategories();
+
+        Spinner spinnerCategories = (Spinner) findViewById(R.id.spinnerCategorySelect);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categoriesView);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add("All");
+        // Apply the adapter to the spinner
+        spinnerCategories.setAdapter(adapter);
     }
 
     @Override
