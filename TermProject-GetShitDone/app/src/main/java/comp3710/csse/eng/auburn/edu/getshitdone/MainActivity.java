@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
                     Spinner spinner = (Spinner) findViewById(R.id.spinnerTaskCategories);
                     // Create an ArrayAdapter using the string array and a default spinner layout
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categories);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, categories);
 
                     // Specify the layout to use when the list of choices appears
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    adapter.setDropDownViewResource(R.layout.spinner_item);
                     // Apply the adapter to the spinner
                     spinner.setAdapter(adapter);
                 }else {

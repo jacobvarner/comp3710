@@ -12,7 +12,11 @@
         android:id="@+id/spinnerCategorySelect"
         android:layout_gravity="center_horizontal"
         android:focusableInTouchMode="true"
-        android:layout_margin="10dp" />
+        android:spinnerMode="dropdown"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:clickable="false"
+        android:theme="@android:style/Widget.DropDownItem" />
 
     <fragment
         android:layout_width="fill_parent"

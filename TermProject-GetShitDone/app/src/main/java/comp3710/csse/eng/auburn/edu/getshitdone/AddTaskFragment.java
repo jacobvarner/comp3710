@@ -42,4 +42,8 @@ public class AddTaskFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
+    public void addTask() {
+
+    }
 }
