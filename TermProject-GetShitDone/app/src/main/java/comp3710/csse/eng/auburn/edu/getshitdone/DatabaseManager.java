@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import java.lang.String;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.util.ArrayList;
 
@@ -38,15 +37,18 @@ public final class DatabaseManager {
         ArrayList<String[]> output = new ArrayList<>();
 
         if (category == "All") {
-            String completed;
+            String[] selectionArgs;
             String[] projection = {"id", "taskName", "category", "completed", "description"};
-            String selection = "completed = ?";
+            String selection;
             if (flag == 1) {
-                completed = "false";
+                selection = "completed = ?";
+                String[] selectionArgs1 = {"false"};
+                selectionArgs = selectionArgs1;
             } else {
-                completed = "true || false";
+                selection = "completed = ? OR completed = ?";
+                String[] selectionArgs2 = {"false", "true"};
+                selectionArgs = selectionArgs2;
             }
-            String[] selectionArgs = {completed};
 
             Cursor c = db.query("tasks", projection, selection, selectionArgs, null, null, "id ASC");
 
@@ -62,16 +64,18 @@ public final class DatabaseManager {
                 c.moveToNext();
             }
         } else {
-
-            String completed;
+            String[] selectionArgs;
             String[] projection = {"id", "taskName", "category", "completed", "description"};
-            String selection = "category = ? AND completed = ?";
+            String selection;
             if (flag == 1) {
-                completed = "false";
+                selection = "category = ? AND completed = ?";
+                String[] selectionArgs1 = {category, "false"};
+                selectionArgs = selectionArgs1;
             } else {
-                completed = "true || false";
+                selection = "completed IS NOT NULL AND category = ?";
+                String[] selectionArgs1 = {category};
+                selectionArgs = selectionArgs1;
             }
-            String[] selectionArgs = {category, completed};
 
             Cursor c = db.query("tasks", projection, selection, selectionArgs, null, null, "id ASC");
 
