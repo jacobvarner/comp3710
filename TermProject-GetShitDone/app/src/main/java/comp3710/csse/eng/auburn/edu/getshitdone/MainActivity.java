@@ -1,5 +1,7 @@
 package comp3710.csse.eng.auburn.edu.getshitdone;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -111,6 +113,38 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean addTask(View view) {
+        EditText taskName = (EditText) findViewById(R.id.editTextTaskTitle);
+        EditText taskDescription = (EditText) findViewById(R.id.editTextTaskDescription);
+        Spinner taskCategory = (Spinner) findViewById(R.id.spinnerTaskCategories);
+
+        String taskNameStr = taskName.getText().toString();
+        String taskDescriptionStr = taskDescription.getText().toString();
+        String taskCategoryStr = taskCategory.getSelectedItem().toString();
+
+        if (taskNameStr == null || taskNameStr == "") {
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getApplicationContext());
+            alertBuilder.setMessage("Task Name may not be blank.");
+            alertBuilder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            alertBuilder.show();
+            return false;
+        } else {
+            DatabaseManager.addTask(taskNameStr, taskCategoryStr, taskDescriptionStr);
+            LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
+            taskName.setText("");
+            taskDescription.setText("");
+            hidden.setVisibility(View.GONE);
+            return true;
+        }
+
     }
 
 }
