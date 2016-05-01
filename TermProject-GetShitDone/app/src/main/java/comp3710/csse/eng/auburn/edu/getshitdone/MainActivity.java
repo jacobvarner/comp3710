@@ -1,7 +1,6 @@
 package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
