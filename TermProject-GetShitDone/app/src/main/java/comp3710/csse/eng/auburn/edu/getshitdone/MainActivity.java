@@ -1,6 +1,7 @@
 package comp3710.csse.eng.auburn.edu.getshitdone;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -58,26 +59,31 @@ public class MainActivity extends AppCompatActivity {
             mDatabase.execSQL("INSERT INTO " + TABLE_CATEGORIES + " (id, title) VALUES (1, 'Default');"); // Add Default category to start with
         }
 
+        ArrayList<String> categories = DatabaseManager.getCategories();
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinnerTaskCategories);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, categories);
+
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
         EditText taskTitle = (EditText) findViewById(R.id.editTextTaskTitle);
         taskTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus) {
-                    LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
-                    hidden.setVisibility(View.VISIBLE);
-                    ArrayList<String> categories = DatabaseManager.getCategories();
+                showTaskEditor();
+            }
+        });
 
-                    Spinner spinner = (Spinner) findViewById(R.id.spinnerTaskCategories);
-                    // Create an ArrayAdapter using the string array and a default spinner layout
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, categories);
 
-                    // Specify the layout to use when the list of choices appears
-                    adapter.setDropDownViewResource(R.layout.spinner_item);
-                    // Apply the adapter to the spinner
-                    spinner.setAdapter(adapter);
-                }else {
-
-                }
+        View taskView = findViewById(R.id.tasksView);
+        taskView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideTaskEditor();
             }
         });
 
@@ -85,14 +91,14 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinnerCategories = (Spinner) findViewById(R.id.spinnerCategorySelect);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, categoriesView);
+        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, categoriesView);
 
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-        adapter.insert("All", 0);
-        adapter.remove("Default");
+        categoriesAdapter.setDropDownViewResource(R.layout.spinner_item);
+        categoriesAdapter.insert("All", 0);
+        categoriesAdapter.remove("Default");
         // Apply the adapter to the spinner
-        spinnerCategories.setAdapter(adapter);
+        spinnerCategories.setAdapter(categoriesAdapter);
 
         spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -140,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         String taskDescriptionStr = taskDescription.getText().toString();
         String taskCategoryStr = taskCategory.getSelectedItem().toString();
 
-        if (taskNameStr == null || taskNameStr == "") {
+        if (taskNameStr.equals("")) {
             AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getApplicationContext());
             alertBuilder.setMessage("Task Name may not be blank.");
             alertBuilder.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -155,10 +161,9 @@ public class MainActivity extends AppCompatActivity {
             return false;
         } else {
             DatabaseManager.addTask(taskNameStr, taskCategoryStr, taskDescriptionStr);
-            LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
             taskName.setText("");
             taskDescription.setText("");
-            hidden.setVisibility(View.GONE);
+            hideTaskEditor();
             updateTaskList();
             return true;
         }
@@ -218,6 +223,23 @@ public class MainActivity extends AppCompatActivity {
                 taskAlert.show();
             }
         });
+    }
+
+    public void showTaskEditor() {
+        LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
+        if (hidden.getVisibility() == View.GONE) {
+            hidden.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideTaskEditor() {
+        LinearLayout hidden = (LinearLayout) findViewById(R.id.extraTaskOptions);
+        EditText taskTitle = (EditText) findViewById(R.id.editTextTaskTitle);
+        taskTitle.clearFocus();
+        if (hidden.getVisibility() == View.VISIBLE) {
+            hidden.setVisibility(View.GONE);
+        }
+
     }
 
 }

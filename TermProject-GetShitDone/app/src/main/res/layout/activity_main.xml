@@ -9,7 +9,8 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/topView">
 
         <LinearLayout
             android:orientation="vertical"
@@ -81,7 +82,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:name="comp3710.csse.eng.auburn.edu.getshitdone.TaskListFragment"
-        android:id="@+id/fragment"
+        android:id="@+id/tasksView"
         android:layout_gravity="center_horizontal"
         tools:layout="@layout/fragment_task_list"
         android:layout_weight="1" />
@@ -90,7 +91,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:name="comp3710.csse.eng.auburn.edu.getshitdone.AddTaskFragment"
-        android:id="@+id/fragment2"
+        android:id="@+id/addTaskEditor"
         android:layout_gravity="center_horizontal"
         tools:layout="@layout/fragment_add_task"
         android:layout_weight="0"

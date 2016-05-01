@@ -3,7 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     tools:context=".AddTaskFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/addTasksEditorView">
 
     <LinearLayout
         android:orientation="horizontal"
