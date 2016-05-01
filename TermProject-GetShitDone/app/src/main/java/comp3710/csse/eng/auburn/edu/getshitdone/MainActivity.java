@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -182,26 +181,33 @@ public class MainActivity extends AppCompatActivity {
             flag = 1;
         }
         final ArrayList<String[]> tasks = DatabaseManager.getTasks(category, flag);
-        final ArrayList<String> taskNames = new ArrayList<>();
-        for (String[] t : tasks) {
-            taskNames.add(t[1]);
-        }
-        ArrayAdapter<String> tasksAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, taskNames);
+        CustomListAdapter tasksAdapter = new CustomListAdapter(MainActivity.this, R.layout.list_item, tasks);
         taskList.setAdapter(tasksAdapter);
         taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder taskAlertBuilder = new AlertDialog.Builder(MainActivity.this);
-                taskAlertBuilder.setTitle(tasks.get(position)[1].toString());
-                taskAlertBuilder.setMessage(tasks.get(position)[4].toString());
-                taskAlertBuilder.setPositiveButton("Completed", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        DatabaseManager.markComplete(Integer.parseInt(tasks.get(position)[0]));
-                        dialog.dismiss();
-                        updateTaskList();
-                    }
-                });
+                taskAlertBuilder.setTitle(tasks.get(position)[1]);
+                taskAlertBuilder.setMessage(tasks.get(position)[4]);
+                if (tasks.get(position)[3].equals("true")) {
+                    taskAlertBuilder.setPositiveButton("Mark Incomplete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DatabaseManager.markIncomplete((Integer.parseInt(tasks.get(position)[0])));
+                            dialog.dismiss();
+                            updateTaskList();
+                        }
+                    });
+                } else {
+                    taskAlertBuilder.setPositiveButton("Mark Complete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            DatabaseManager.markComplete(Integer.parseInt(tasks.get(position)[0]));
+                            dialog.dismiss();
+                            updateTaskList();
+                        }
+                    });
+                }
                 taskAlertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
