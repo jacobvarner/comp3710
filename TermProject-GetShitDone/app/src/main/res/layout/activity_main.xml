@@ -6,17 +6,76 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Spinner
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerCategorySelect"
-        android:layout_gravity="center_horizontal"
-        android:focusableInTouchMode="true"
-        android:spinnerMode="dropdown"
-        android:background="@color/colorPrimary"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:clickable="false"
-        android:theme="@android:style/Widget.DropDownItem" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Category:"
+                android:id="@+id/textView3"
+                android:gravity="center_vertical"
+                android:textSize="18dp"
+                android:textIsSelectable="true"
+                android:layout_weight="0"
+                android:paddingLeft="10dp"
+                android:phoneNumber="false"
+                android:paddingTop="10dp" />
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerCategorySelect"
+                android:layout_gravity="center_vertical"
+                android:focusableInTouchMode="true"
+                android:spinnerMode="dropdown"
+                android:clickable="false"
+                android:layout_weight="0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Show\nCompleted"
+                android:id="@+id/textView4"
+                android:textAlignment="center"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBoxCompleted"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_horizontal"
+                android:onClick="completedChecked" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <SurfaceView
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:id="@+id/surfaceView"
+        android:background="@color/colorPrimaryDark" />
 
     <fragment
         android:layout_width="fill_parent"
