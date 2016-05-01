@@ -7,15 +7,8 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal" >
-
-        <ExpandableListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/expandableListView" />
-    </ScrollView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView" />
 </LinearLayout>

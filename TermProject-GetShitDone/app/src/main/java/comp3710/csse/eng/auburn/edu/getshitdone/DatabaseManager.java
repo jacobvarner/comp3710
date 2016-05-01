@@ -35,30 +35,58 @@ public final class DatabaseManager {
     // Flags: 0 = all, 1 = incomplete
     public static ArrayList<String[]> getTasks(String category, int flag) {
         SQLiteDatabase db = SQLiteDatabase.openDatabase(DATABASE_PATH + DATABASE_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        String completed;
-        String[] projection = {"id", "taskName", "category", "completed", "description"};
-        String selection = "category = ? AND flag = ?";
-        if (flag == 1) {
-            completed = "false";
-        } else {
-            completed = "true || false";
-        }
-        String[] selectionArgs = {category, completed};
-
-        Cursor c = db.query("tasks", projection, selection, selectionArgs, null, null, "ASC");
-
         ArrayList<String[]> output = new ArrayList<>();
 
-        c.moveToFirst();
-        while(!c.isAfterLast()) {
-            String[] row = new String[c.getColumnCount()];
-            row[0] = c.getString(0); // id
-            row[1] = c.getString(1); // taskName
-            row[2] = c.getString(2); // category
-            row[3] = c.getString(3); // completed
-            row[4] = c.getString(4); // description
-            output.add(row);
-            c.moveToNext();
+        if (category == "All") {
+            String completed;
+            String[] projection = {"id", "taskName", "category", "completed", "description"};
+            String selection = "completed = ?";
+            if (flag == 1) {
+                completed = "false";
+            } else {
+                completed = "true || false";
+            }
+            String[] selectionArgs = {completed};
+
+            Cursor c = db.query("tasks", projection, selection, selectionArgs, null, null, "id ASC");
+
+            c.moveToFirst();
+            while(!c.isAfterLast()) {
+                String[] row = new String[c.getColumnCount()];
+                row[0] = c.getString(0); // id
+                row[1] = c.getString(1); // taskName
+                row[2] = c.getString(2); // category
+                row[3] = c.getString(3); // completed
+                row[4] = c.getString(4); // description
+                output.add(row);
+                c.moveToNext();
+            }
+        } else {
+
+            String completed;
+            String[] projection = {"id", "taskName", "category", "completed", "description"};
+            String selection = "category = ? AND completed = ?";
+            if (flag == 1) {
+                completed = "false";
+            } else {
+                completed = "true || false";
+            }
+            String[] selectionArgs = {category, completed};
+
+            Cursor c = db.query("tasks", projection, selection, selectionArgs, null, null, "id ASC");
+
+
+            c.moveToFirst();
+            while (!c.isAfterLast()) {
+                String[] row = new String[c.getColumnCount()];
+                row[0] = c.getString(0); // id
+                row[1] = c.getString(1); // taskName
+                row[2] = c.getString(2); // category
+                row[3] = c.getString(3); // completed
+                row[4] = c.getString(4); // description
+                output.add(row);
+                c.moveToNext();
+            }
         }
 
         return output;

@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -86,11 +88,44 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categoriesView);
 
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
         adapter.insert("All", 0);
         adapter.remove("Default");
         // Apply the adapter to the spinner
         spinnerCategories.setAdapter(adapter);
+
+        ListView taskList = (ListView) findViewById(R.id.listView);
+        String category = spinnerCategories.getSelectedItem().toString();
+        final ArrayList<String[]> tasks = DatabaseManager.getTasks(category, 1);
+        final ArrayList<String> taskNames = new ArrayList<>();
+        for (String[] t : tasks) {
+            taskNames.add(t[1]);
+        }
+        ArrayAdapter<String> tasksAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.list_item, taskNames);
+        taskList.setAdapter(tasksAdapter);
+        taskList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder taskAlertBuilder = new AlertDialog.Builder(MainActivity.this);
+                taskAlertBuilder.setTitle(tasks.get(position)[1].toString());
+                taskAlertBuilder.setMessage(tasks.get(position)[4].toString());
+                taskAlertBuilder.setPositiveButton("Completed", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseManager.markComplete(Integer.parseInt(tasks.get(position)[0]));
+                        dialog.dismiss();
+                    }
+                });
+                taskAlertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog taskAlert = taskAlertBuilder.create();
+                taskAlert.show();
+            }
+        });
     }
 
     @Override
